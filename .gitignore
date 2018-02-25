@@ -1,3 +1,7 @@
+# large data files
+data/tweets1100000_tokenized.pickle
+data/tweets1100000.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
