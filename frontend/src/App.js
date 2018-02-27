@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import { Provider, connect } from 'react-redux';
-import HomeContainer from './components/containers/home-container';
+import HomeContainer from './components/home-container';
 import store from './store';
 
 class App extends Component {
