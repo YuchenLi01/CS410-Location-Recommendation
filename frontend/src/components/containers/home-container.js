@@ -7,12 +7,35 @@ import MenuItem from 'material-ui/MenuItem';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 
+import { compose, withProps } from "recompose"
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+
+const MyMapComponent = compose(
+  withProps({
+    googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
+    loadingElement: <div style={{ height: "100%" }} />,
+    containerElement: <div style={{ height: "850px" }} />,
+    mapElement: <div style={{ height: "100%" }} />,
+  }),
+  withScriptjs,
+  withGoogleMap
+)((props) =>
+  <GoogleMap
+    defaultZoom={8}
+    defaultCenter={{ lat: 34.0522, lng: -118.2437 }}
+  >
+    {/* {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} onClick={props.onMarkerClick} />} */}
+  </GoogleMap>
+)
+
+
 const styles = {
   root: {
-    marginLeft: '15%',
-    paddingTop: '2%',
-    paddingLeft: '3%',
-    paddingRight: '3%',
+    marginRight: '15%',
+    height: '80%',
+    // paddingTop: '1%',
+    // paddingLeft: '3%',
+    // paddingRight: '3%',
   },
 };
 
@@ -47,6 +70,19 @@ class Home extends React.Component {
             <MenuItem>A tweet</MenuItem>
           </Drawer>
           <div style={styles.root}>
+            <MyMapComponent
+            />
+            {/* <withGoogleMap>
+            <GoogleMap
+              googleMapURL={"https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"}
+              loadingElement={<div style={{ height: "100%" }} />}
+              containerElement={<div style={{ height: "850px" }} />}
+              mapElement={<div style={{ height: "100%" }} />}
+              defaultZoom={8}
+              defaultCenter={{ lat: 34.0522, lng: -118.2437 }}
+            >
+            </GoogleMap>
+            </withGoogleMap> */}
           </div>
 
         </div>
