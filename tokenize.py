@@ -50,10 +50,25 @@ Main
 '''
 if __name__=="__main__":
     
+    
     # read in the tweet data
     tweets = read_tweets(FILE_NAME)
     
     # dump the processed data
-    out_fn = 'data/tweets1100000_tokenized.pickle'
-    with codecs.open(out_fn, 'wb') as f:
-        pickle.dump(tweets, f)
+    #out_fn = 'data/tweets1100000_tokenized.pickle'
+    #with codecs.open(out_fn, 'wb') as f:
+    #    pickle.dump(tweets, f)  
+        
+    # re-save the results to different pickles to obtain smaller files
+    num_files = 20
+    out_folder = 'data/tweets1100000_tokenized_group/'
+    total = len(tweets)
+    count = 0 #debug
+    for i in range(num_files):
+        out_fn = out_folder + 'tweets1100000_tokenized_{}.pickle'.format(i)
+        start = int(i * total / num_files)
+        end = int((i+1) * total / num_files)
+        with codecs.open(out_fn, 'wb') as f:
+            pickle.dump(tweets[start:end], f)
+            count += (end-start)
+    print("Saved %d tweets in %d files." %(total, num_files))
