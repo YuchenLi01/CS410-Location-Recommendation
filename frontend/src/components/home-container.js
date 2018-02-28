@@ -9,9 +9,9 @@ import MapContainer from './map-container';
 import DrawerContainer from './drawer-container';
 
 const styles = {
-  map: {
+  mapStyle: {
     marginRight: '15%',
-    height: '80%',
+    height: window.innerHeight - 64, // 64 is the height of AppBar
   }
 };
 
@@ -29,7 +29,7 @@ class HomeContainer extends React.Component {
       <div>
         <AppBar title="TweetPortal"/>
         <DrawerContainer/>
-        <div style={styles.map}>
+        <div style={styles.mapStyle}>
           <MapContainer/>
         </div>
       </div>
