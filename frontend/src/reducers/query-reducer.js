@@ -1,8 +1,13 @@
+/* eslint-disable no-undef */
+
 import { ADDWORD, REMOVEWORD, LOADINGQUERY, LOADEDQUERY, RESET } from '../actions/query-action';
 
 const defaultState = {
   keywords: ["asd", "qwe"],
   resultObj: {},
+  heatmapData: [],
+  markers: [],
+  tweets: [],
   queryInProgress: false,
 }
 
@@ -10,6 +15,9 @@ const loadedQuery = (state, resultObj) => {
   return {
     ...state,
     resultObj: resultObj,
+    heatmapData: resultObj.heatmapData,
+    markers: resultObj.markers,
+    tweets: resultObj.markers,
     queryInProgress: false,
   }
 }
