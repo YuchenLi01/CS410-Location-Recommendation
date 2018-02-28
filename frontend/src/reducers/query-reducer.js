@@ -1,14 +1,23 @@
 import { ADDWORD, REMOVEWORD, LOADINGQUERY, LOADEDQUERY, RESET } from '../actions/query-action';
 
 const defaultState = {
-  keywords: [],
+  keywords: ["asd", "qwe"],
   resultObj: {},
+  queryInProgress: false,
 }
 
 const loadedQuery = (state, resultObj) => {
   return {
     ...state,
-    resultObj: resultObj
+    resultObj: resultObj,
+    queryInProgress: false,
+  }
+}
+
+const loadingQuery = (state) => {
+  return {
+    ...state,
+    queryInProgress: true,
   }
 }
 
@@ -34,9 +43,9 @@ export default function (state, action) {
     case ADDWORD:
       return addWord(state, action.curWord);
     case REMOVEWORD:
-      return defaultState;
+      return removeWord(state, action.curWord);
     case LOADINGQUERY:
-      return state;
+      return loadingQuery(state);
     case LOADEDQUERY:
       return loadedQuery(state, action.resultObj);
     case RESET:

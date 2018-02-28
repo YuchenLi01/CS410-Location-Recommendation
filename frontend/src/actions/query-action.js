@@ -40,7 +40,9 @@ export function loadedQuery(resultObj) {
 
 export function loadQuery() {
   return function(dispatch) {
-    dispatch(loadingQuery);
-    return dispatch(loadedQuery({result: "received"}))
+    dispatch(loadingQuery());
+    return setTimeout(() => {
+      dispatch(loadedQuery({result: "received"}))
+    }, 2000); // just like API, taking time
   }
 }
