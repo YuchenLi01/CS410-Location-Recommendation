@@ -9,8 +9,10 @@ import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 import Chip from 'material-ui/Chip';
 import LinearProgress from 'material-ui/LinearProgress';
+import {List} from 'material-ui/List';
 
-import  * as queryActions from '../actions/query-action'
+import TweetPresenter from './tweet-presenter';
+import  * as queryActions from '../actions/query-action';
 
 
 const styles = {
@@ -70,6 +72,14 @@ class DrawerContainer extends React.Component {
     }
   }
 
+  handleHover = (tweet) => {
+    this.props.queryActions.highlight(tweet);
+  }
+
+  clearHover = () => {
+    this.props.queryActions.highlight({position: {lat: 0, lng: 0}});
+  }
+
   chipClick = (curWord) => {
     this.props.queryActions.removeWord(curWord);
   }
@@ -114,8 +124,18 @@ class DrawerContainer extends React.Component {
         <Divider/>
         <MenuItem style={styles.buttonStyle} onClick={() => this.props.queryActions.reset()}>Clear</MenuItem>
         <Divider/>
-        {this.props.resultObj.result ? <p>{this.props.resultObj.result}</p> : <div/> }
-
+        <List>
+          {this.props.tweets.map((tweet, index) => {
+            return (
+              <TweetPresenter
+                key={index}
+                tweet={tweet}
+                onHover={this.handleHover}
+                onLeave={this.clearHover}
+              />
+            )
+          })}
+        </List>
       </Drawer>
     )
   }
@@ -125,6 +145,7 @@ function mapStateToProps(state) {
   return {
     keywords: state.queryReducer.keywords,
     resultObj: state.queryReducer.resultObj,
+    tweets: state.queryReducer.tweets,
     queryInProgress: state.queryReducer.queryInProgress,
   };
 }

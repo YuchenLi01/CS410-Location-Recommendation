@@ -1,6 +1,14 @@
 /* eslint-disable no-undef */
 
-import { ADDWORD, REMOVEWORD, LOADINGQUERY, LOADEDQUERY, RESET } from '../actions/query-action';
+import { ADDWORD, REMOVEWORD, LOADINGQUERY, LOADEDQUERY, RESET, HIGHLIGHT } from '../actions/query-action';
+
+const copyHelper = (obj) => {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+const compareHelper = (n1, n2) => {
+  return Math.abs(n1 - n2) < 0.0000001
+}
 
 const defaultState = {
   keywords: ["asd", "qwe"],
@@ -17,7 +25,7 @@ const loadedQuery = (state, resultObj) => {
     resultObj: resultObj,
     heatmapData: resultObj.heatmapData,
     markers: resultObj.markers,
-    tweets: resultObj.markers,
+    tweets: resultObj.tweets,
     queryInProgress: false,
   }
 }
@@ -46,6 +54,22 @@ const removeWord = (state, curWord) => {
   }
 }
 
+const highlight = (state, tweet) => {
+  let newMarkers = copyHelper(state.markers);
+  for (let i = 0; i < newMarkers.length; i++) {
+    let curMarker = newMarkers[i];
+    if(compareHelper(tweet.lat, curMarker.position.lat) && compareHelper(tweet.lng, curMarker.position.lng)) {
+      curMarker.highlight = true;
+    }else {
+      curMarker.highlight = false;
+    }
+  }
+  return {
+    ...state,
+    markers: newMarkers
+  }
+}
+
 export default function (state, action) {
   switch (action.type) {
     case ADDWORD:
@@ -56,6 +80,8 @@ export default function (state, action) {
       return loadingQuery(state);
     case LOADEDQUERY:
       return loadedQuery(state, action.resultObj);
+    case HIGHLIGHT:
+      return highlight(state, action.tweet);
     case RESET:
       return defaultState;
     default:
