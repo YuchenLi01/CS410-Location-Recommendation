@@ -1,0 +1,1 @@
+please replace it by tweets1100000.txt, which is too be to be uploaded, if the user wants to create new inverted index.
