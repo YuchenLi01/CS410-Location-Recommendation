@@ -1,0 +1,1 @@
+This file is the placeholder for tweets1100000.txt which is too big to be upload to github. Please delete it and replace it by the tweets1100000.txt if the user wants to create new inverted index
