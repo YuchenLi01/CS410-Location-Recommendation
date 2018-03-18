@@ -2,4 +2,7 @@ This folder contains two files, search.py and create_Inverted_Index.py. The firs
 where a keyword exists), total frequency (i.e., the total number of times that the keyword exists) and a dictionary that maps the ID of document to the number
 of times that the keyword occurs in that tweet. The second one constructs the inverted index that enables the searching.
 
-The inverted index is stored in twenty .pickle files due to the large size. search.py searches each .pickle files and add the result together.
+The inverted index is stored in the .pickle file uploaded to 410 google drive (in the same directory as the notes and proposal). 
+
+Update: 1. I find that self.text is the most appropriate test used for search. Self.word_tokens contain too much stop words. I also tried some other tokenize tools but still found that self.text is best. 
+        2. I feel that we need to store the top 10000 frequent (in document frequency) terms in the inverted index instead of 5000, since there are a total of 500000+ different terms in the tweets. 
