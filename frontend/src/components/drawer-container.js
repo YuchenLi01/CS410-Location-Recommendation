@@ -118,7 +118,7 @@ class DrawerContainer extends React.Component {
         </div>
 
         <Divider/>
-        <MenuItem style={styles.buttonStyle} onClick={() => this.props.queryActions.loadQuery()}>Search</MenuItem>
+        <MenuItem style={styles.buttonStyle} onClick={() => this.props.queryActions.loadQuery(this.props.keywords)}>Search</MenuItem>
         <Divider/>
         {this.props.queryInProgress ? <LinearProgress mode={'indeterminate'}/> : <div/>}
         <Divider/>
