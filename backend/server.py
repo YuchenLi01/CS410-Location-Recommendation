@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from tweet_backend import TweetBackend
 import json
+import pickle
+import codecs
 
 app = Flask(__name__)
 
@@ -26,12 +28,20 @@ fake_heatmap = [
 	[34.0522342, -118.2436849],
 ]
 
+expansion_fn = 'top2000wordsexpansion.pickle'
+expansion_fl = codecs.open(expansion_fn, 'rb')
+expansion_dic = pickle.load(expansion_fl)
+expansion_fl.close()
+
 def get_tweets(query_words):
 	res_arr = [fake_tweet1, fake_tweet2]
 	res_arr = list(map(lambda x : x.to_json_string(), res_arr))
 	return res_arr
 
 def get_heatmap(query_words):
+	for word in query_words:
+		if word in expansion_dic:
+			print(expansion_dic[word])
 	return fake_heatmap
 
 @app.route("/")
@@ -49,4 +59,4 @@ def serving():
 	return res
 
 if __name__ == '__main__':
-  app.run(debug=True)
+	app.run(debug=True)
