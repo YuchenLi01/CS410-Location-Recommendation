@@ -1,4 +1,6 @@
 # CS410-Location-Recommendation
+**For detailed documentation, please refer to the [wiki page](https://github.com/YuchenLiDaniel/CS410-Location-Recommendation/wiki)**
+
 CS 410 course project working on location recommendation from Twitter data
 
 1. Files
