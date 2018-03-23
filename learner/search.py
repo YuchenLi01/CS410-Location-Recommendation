@@ -55,32 +55,32 @@ class search_result:
 def search(kw):
     kw = kw.lower()
     result = search_result(kw)
-    for loop in range(0, 1):
-        fn = 'data/tweets1100000_partial_'+str(loop)+'_.pickle'
+    
+    fn = 'data/tweets1100000_inverted_index.pickle'
         
-        with codecs.open(fn, 'rb') as f:
-            t = pickle.load(f, encoding='latin1')
-            #search the kw within the current loop, including the 
-            #doc_freq, total_freq, and all postings. Add/append them together.
-            #if not exist in the current loop, continue to the next loop
-            if kw in t[0].keys():
-                term_id = t[0][kw]
-                print('term_id: %d' % term_id)
-                if term_id in t[1].keys():
-                    result.update(t[1][term_id].doc_freq, t[1][term_id].total_freq, t[1][term_id].postings)    
-                #print(len(t[1][term_id].postings))
-            '''print(t[1][term_id].doc_freq)
-            print(t[1][term_id].total_freq)
-            print(t[1][term_id].postings)
-            '''
+    with codecs.open(fn, 'rb') as f:
+        t = pickle.load(f, encoding='latin1')
+        #search the kw within the current loop, including the 
+        #doc_freq, total_freq, and all postings. Add/append them together.
+        #if not exist in the current loop, continue to the next loop
+        if kw in t[0].keys():
+            term_id = t[0][kw]
+            print('term_id: %d' % term_id)
+            if term_id in t[1].keys():
+                result.update(t[1][term_id].doc_freq, t[1][term_id].total_freq, t[1][term_id].postings)    
+            #print(len(t[1][term_id].postings))
+        '''print(t[1][term_id].doc_freq)
+        print(t[1][term_id].total_freq)
+        print(t[1][term_id].postings)
+        '''
             
-            t = None
-            
+        t = None
+        
     return result
 
 
 if __name__ == "__main__":
-    result = search('good')
+    result = search('hell')
     result.print_result()
     #result.doc_freq = 0, the document frequency, int
     #result.total_freq = 0, the total frequency, int
