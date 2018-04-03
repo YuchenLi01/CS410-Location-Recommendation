@@ -1,6 +1,7 @@
 import pickle
 import codecs
 import math
+import json
 
 INVERT_IDX_FN = 'data/tweets1100000_inverted_index.pickle'
 CORPUS_FN = 'data/tweets1100000.txt'
@@ -33,6 +34,19 @@ class NewTweet:
 		self.time = "{} {} {}:{}".format(time_arr[1], time_arr[2], tmp[0], tmp[1])
 		self.lat = float(old_tweet.lat)
 		self.lng = float(old_tweet.lng)
+
+	def to_json_string(self):
+		dic = {
+			"user": self.user,
+			"text": self.text,
+			"time": self.time,
+			"lat": self.lat,
+			"lng": self.lng
+		}
+		return json.dumps(dic)
+
+	def to_heatmap(self):
+		return [self.lat, self.lng]
 
 class inverted_idx_obj:
   def __init__(self):
@@ -87,8 +101,9 @@ class BM25:
 		doc_id_score_arr = sorted(doc_id_score_arr, key=lambda x : -x[1])
 		doc_id_arr = list(map(lambda x : x[0], doc_id_score_arr))
 		tweet_arr = list(map(lambda x : self.id2tweet[x], doc_id_arr))
-		for t in tweet_arr:
-			print(t.text)
+		# for t in tweet_arr:
+			# print(t.text)
+		return tweet_arr
 
 	def get_score(self, invert_idx_obj, doc_id):
 		cnt = invert_idx_obj.postings[doc_id]
@@ -101,7 +116,9 @@ class BM25:
 
 def main():
 	bm25_obj = BM25()
-	bm25_obj.query(["drink", "beer"])
+	res_arr = bm25_obj.query(["drink", "beer"])
+	# res_arr = list(map(lambda x : x.to_json_string(), res_arr))
+	return res_arr
 
 if __name__ == "__main__":
   main()

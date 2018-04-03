@@ -3,6 +3,9 @@ from tweet_backend import TweetBackend
 import json
 import pickle
 import codecs
+from bm25 import *
+
+bm25_obj = BM25()
 
 app = Flask(__name__)
 
@@ -34,15 +37,19 @@ expansion_dic = pickle.load(expansion_fl)
 expansion_fl.close()
 
 def get_tweets(query_words):
-	res_arr = [fake_tweet1, fake_tweet2]
+	res_arr = bm25_obj.query(query_words)
 	res_arr = list(map(lambda x : x.to_json_string(), res_arr))
 	return res_arr
 
 def get_heatmap(query_words):
+	new_words = []
 	for word in query_words:
 		if word in expansion_dic:
-			print(expansion_dic[word])
-	return fake_heatmap
+			new_words.extend(expansion_dic[word])
+			# print(expansion_dic[word])
+	res_arr = bm25_obj.query(new_words[:3])
+	res_arr = list(map(lambda x : x.to_heatmap(), res_arr))
+	return res_arr
 
 @app.route("/")
 def serving():
