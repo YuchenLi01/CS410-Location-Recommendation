@@ -4,6 +4,7 @@ import math
 
 INVERT_IDX_FN = 'data/tweets1100000_inverted_index.pickle'
 CORPUS_FN = 'data/tweets1100000.txt'
+NUM_PICKLE = 2
 M = 1000000.0
 K = 1.2
 B = 0.75
@@ -50,7 +51,7 @@ class Corpus:
 	def __init__(self):
 		self.id2tweet = {}
 		# l = 0
-		for num in range(0, 2):
+		for num in range(0, NUM_PICKLE):
 			fn = 'data/tweets1100000_tokenized_group/tweets1100000_tokenized_' + str(num) + '.pickle'
 			with codecs.open(fn, 'rb') as f:
 				tweets = pickle.load(f, encoding = 'latin1') #1/20 of all pickles
