@@ -11,7 +11,7 @@ const compareHelper = (n1, n2) => {
 }
 
 const defaultState = {
-  keywords: ["asd", "qwe"],
+  keywords: ["beer", "drink"],
   resultObj: {},
   heatmapData: [],
   markers: [],
